@@ -9,6 +9,6 @@
 CREATE TABLE articles (
   id SERIAL PRIMARY KEY,
   title varchar(255),
-  url varchar(2047),
-  description varchar(2047)
+  url varchar(255),
+  description varchar(255)
 );
