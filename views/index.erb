@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>News Aggregator</title>
+    <link rel="stylesheet" href="/home.css">
+  </head>
+
+  <body>
+    <h1>News Aggregator</h1>
+
+    <ul>
+      <% articles.each do |article| %>
+        <li>
+          <a href="<%= article['url'] %>" target="_blank"><%= article['article'] %></a>
+        </li>
+        Desc: <%= article['description'] %></br></li>
+        <% end %>
+    </ul>
+
+<a href = "/articles/new/">Write new article</a>
+
+  </body>
+</html>
