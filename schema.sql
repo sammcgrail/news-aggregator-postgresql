@@ -6,6 +6,8 @@
 
 -- Define your schema here:
 
+DROP TABLE articles;
+
 CREATE TABLE articles (
   id SERIAL PRIMARY KEY,
   title varchar(255),

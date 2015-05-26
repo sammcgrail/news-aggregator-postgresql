@@ -6,14 +6,15 @@
   </head>
 
   <body>
-    <h1>News Aggregator</h1>
+    <h1>Article List</h1>
 
     <ul>
+      binding.pry
       <% articles.each do |article| %>
         <li>
-          <a href="<%= article['url'] %>" target="_blank"><%= article['article'] %></a>
+          <a href="<%= article["url"] %>" target="_blank"><%= article["title"] %></a>
         </li>
-        Desc: <%= article['description'] %></br></li>
+        Desc: <%= article["description"] %></br></li>
         <% end %>
     </ul>
 

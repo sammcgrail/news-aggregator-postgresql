@@ -3,35 +3,50 @@ require "pry"
 require "sinatra"
 require "pg"
 
+#method to open a conn to psql db
+
 def db_connection
   begin
-    connection = PG.connect(dbname: "articles")
+    connection = PG.connect(dbname: "news_aggregator")
     yield(connection)
   ensure
     connection.close
   end
 end
 
+get "/" do
+  redirect "/articles"
+end
+get "/articles/" do
+  redirect "/articles"
+end
+
 get "/articles" do
-  articles = db_connection { |conn| conn.exec("SELECT name FROM articles") }
+  articles = db_connection { |conn| conn.exec("SELECT * FROM articles") }
   erb :index, locals: { articles: articles }
-end
-
-get "/articles/:article" do
-  erb :show, locals: { article: params[:article] }
-end
-
-post "/articles" do
-  # Read the input from the form the user filled out
-  title = params["article"]
-  url = params["url"]
-  description = params["description"]
-
-
-  # Insert new article into the database
-  db_connection do |conn|
-    conn.exec_params("INSERT INTO articles (name) VALUES ($1, $2, $3)", [title, url, desription])
+  db_connection do |connection|
+    connection.exec("SELECT * FROM articles;")
   end
+  erb :index, locals: { article: params[:article] }
+end
+
+get "/articles/new" do
+  erb :new
+end
+
+post "/articles/new" do
+  # Read the input from the form the user filled out
+  title = params[:title]
+  url = params[:url]
+  description = params[:description]
+
+  # Insert new article into the database   - safe mode
+  sql2 = "INSERT INTO articles(title, url, description)
+    VALUES ($1, $2, $3);"
+  db_connection do |connection|
+    connection.exec_params(sql2, [title, url, description])
+  end
+
 
   # Send the user back to the home page which shows
   # the list of articles
@@ -41,6 +56,8 @@ end
 
 
 
+
+# old code
 # articles =  CSV.read("articles.csv",headers:true)
 #
 # def our_error(article, url, description)
