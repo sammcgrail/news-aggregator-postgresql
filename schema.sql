@@ -6,6 +6,9 @@
 
 -- Define your schema here:
 
--- CREATE TABLE articles (
---   <column definitions go here>
--- );
+CREATE TABLE articles (
+  id SERIAL PRIMARY KEY,
+  title varchar(255),
+  url varchar(2047),
+  description varchar(2047)
+);
